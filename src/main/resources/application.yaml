@@ -1,0 +1,29 @@
+server:
+  port: 8082
+  servlet:
+    session:
+      timeout: 86400
+
+spring:
+  datasource:
+    url: "jdbc:mysql://111.229.212.127:3306/database?useSSL=false&characterEncoding=UTF-8&serverTimezone=GMT%2b8"
+    username: "root"
+    password: "****"
+    driver-class-name: "com.mysql.cj.jdbc.Driver"
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+
+mqtt:
+  url: "tcp://10.4.111.19:1883"
+  receiver:
+    defaultTopic: "v1/devices/telemetry/audio/1/#,$SYS/brokers/emqx@127.0.0.1/clients/+/connected,$SYS/brokers/emqx@127.0.0.1/clients/+/disconnected"
+    clientId: "iais"
+  sender:
+    clientId: "mqttProducer"
+    defaultTopic: "hangge"
+
+logging:
+  path: /data/logs
+  config: classpath:logback-spring.xml

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+    <!-- 日志文件路径 -->
+    <springProperty name="logging.path"  source="logging.path"/>
+    <!-- 日志编码 -->
+    <property name="log.charset" value="UTF-8"/>
+    <!-- 日志输出样式 -->
+    <property name="file.name.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"/>
+    <!-- 日志文件最大保存历史天数 -->
+    <property name="max.history" value="15"/>
+    <!-- 单种日志文件总大小 -->
+    <property name="total.size.cap" value="2GB"/>
+    <!-- 单个日志文件大小 -->
+    <property name="max.file.size" value="100MB"/>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${file.name.pattern}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- web服务日志 -->
+    <appender name="BASE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logging.path}/base.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level><!--生产环境可以级别设置成INFO或者更高，调试环境下设置成DEBUG-->
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logging.path}/temp/base.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <maxHistory>${max.history}</maxHistory>
+            <maxFileSize>${max.file.size}</maxFileSize>
+            <totalSizeCap>${total.size.cap}</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${file.name.pattern}</pattern>
+            </layout>
+            <charset>${log.charset}</charset>
+        </encoder>
+    </appender>
+
+    <root level="INFO" additivity="false">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="BASE_APPENDER"/>
+    </root>
+
+</configuration>
