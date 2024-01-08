@@ -15,7 +15,7 @@ public class Runner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args){
-        webSocketService.sendAudioLoop();
+//        webSocketService.sendAudioLoop();
         log.info("音频发送服务启动！");
     }
 

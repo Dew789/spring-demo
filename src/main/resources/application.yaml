@@ -24,6 +24,19 @@ mqtt:
     clientId: "mqttProducer"
     defaultTopic: "hangge"
 
+netty:
+  tcp:
+    port: 8888
+    read-timeout: 15 #读超时 15分钟
+  udp:
+    port: 7777
+  threads:
+    boss: 1
+    worker: 4
+    business:
+      num: 1 #业务线程数量
+      max-pending: 100000
+
 logging:
   path: /data/logs
   config: classpath:logback-spring.xml
